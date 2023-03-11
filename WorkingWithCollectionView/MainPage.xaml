@@ -8,17 +8,98 @@
     x:DataType="this:MainPage">
 
 
-    <VerticalStackLayout BindingContext="{Binding Student}">
-
-        <Button
+    <VerticalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button
             Margin="20"
             BorderWidth="3"
             Clicked="Button_Clicked"
             HeightRequest="40"
             Text="טען תלמידים"
             WidthRequest="120" />
-        
+            <Button
+            Margin="20"
+            BorderWidth="3"
+            Clicked="ButtonDel_Clicked"
+            HeightRequest="40"
+            Text="מחק תלמידים"
+            WidthRequest="120" />
+
+        </HorizontalStackLayout>
+
+
+        <CollectionView ItemsSource="{Binding Students}" SelectionMode="Single" SelectedItem="{Binding Student}"
+                        SelectionChanged="CollectionView_SelectionChanged">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                      Span="3" HorizontalItemSpacing="12" VerticalItemSpacing="12"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Models:Student">
+                    <SwipeView>
+                        <SwipeView.LeftItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                BackgroundColor="Red"
+                                Clicked="SwipeL_Clicked"
+                                IconImageSource="deletebutton.svg"
+                                Text="Delete" />
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                BackgroundColor="Aqua"
+                                Clicked="SwipeR_Clicked"
+                                Text="Copy" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid
+                        Padding="10"
+                        ColumnDefinitions="auto,auto"
+                        ColumnSpacing="5"
+                        HorizontalOptions="Center"
+                        RowDefinitions="*,*,*"
+                        RowSpacing="5">
+                            <Border
+                            Grid.RowSpan="3"
+                            Grid.Column="0"
+                            HeightRequest="80"
+                            StrokeShape="RoundRectangle 40"
+                            StrokeThickness="5"
+                            WidthRequest="80">
+
+
+                                <Image
+                                Aspect="AspectFill"
+                                HeightRequest="80"
+                                HorizontalOptions="Center"
+                                Source="{Binding Image}"
+                                WidthRequest="80" />
+                            </Border>
+                            <Label
+                            Grid.Column="1"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="{Binding Name}" />
+                            <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            CharacterSpacing="3"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding BirthDate, StringFormat='{0:dd/MM/yyyy}'}" />
+                            <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            CharacterSpacing="3"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Age, StringFormat='{0:F1}'}" />
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
-
-
 </ContentPage>
